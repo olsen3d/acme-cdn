@@ -1,3 +1,6 @@
+/* eslint-disable no-undef */
+/* eslint-disable quotes */
+/* eslint-disable no-use-before-define */
 const table = document.querySelector(".table");
 const head = document.querySelector(".header");
 const numOfProducts = document.querySelector(".numOfProducts");
@@ -17,30 +20,24 @@ const renderAll = Promise.all([products, companies])
 renderAll.then(data => {
     const product = data[0];
     const company = data[1];
-    
+
     renderNavBar(product, company);
     renderProducts(product);
-   
-    window.addEventListener("hashchange", () => {
-        const page = window.location.hash.slice(1);
-        if(page === "companies") {
-            companiesNav.classList.add("active");
-            productsNav.classList.remove("active");
-            renderCompanies(company);
-    
-        } else if(page === "products") {
-            companiesNav.classList.remove("active");
-            productsNav.classList.add("active");
-            renderProducts(product);
-        }
-    });
+    return data
+});
 
-    // renderProducts(product);
+window.addEventListener("hashchange", () => {
+    const page = window.location.hash.slice(1);
+    if(page === "companies") {
+        companiesNav.classList.add("active");
+        productsNav.classList.remove("active");
+        renderAll.then( data => renderCompanies(data[1]));
 
-    /*
-        renderCompanies(company) TO RENDER THE COMPANIES
-        renderProducts(product) TO RENDER THE PRODUCTS
-    */
+    } else if(page === "products") {
+        companiesNav.classList.remove("active");
+        productsNav.classList.add("active");
+        renderAll.then( data => renderProducts(data[0]));
+    }
 });
 
 const renderNavBar = (product, company) => {
@@ -60,7 +57,6 @@ const renderCompanies = inputData => {
     head.innerHTML = htmlForHead;
     //######################
 
-
     //################## getting the data
     const htmlForData = inputData.map(data => {
         return `
@@ -77,8 +73,6 @@ const renderCompanies = inputData => {
     table.innerHTML = htmlForData;
     //################### 
 };
-
-
 
 const renderProducts = inputData => {
      //#################### getting the table heads
