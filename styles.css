@@ -1,0 +1,32 @@
+body {
+    font-family: verdana;
+    margin: 0;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+}
+
+tr {
+    display: flex;
+    justify-content: space-between;
+}
+
+thead {
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+td {
+    justify-content: space-between;
+    flex: 1;
+}
+
+.header {
+    padding: 0.5rem;
+}
